@@ -1,0 +1,10 @@
+<h2>Library Helper</h2>
+<button id="evaluate">Evaluate</button>
+<p>One the debug console to see items logged</p>
+<script>
+
+document.getElementById('evaluate').onclick = () => {
+  parent.postMessage({ pluginMessage: { type: 'evaluate'} }, '*')
+}
+
+</script>
