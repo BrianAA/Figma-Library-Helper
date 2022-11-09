@@ -1,20 +1,25 @@
 import * as React from 'react';
-import {GlobalStyles, styled} from '../../../stiches.theme';
+import {GlobalStyles, css, styled} from '../../../stiches.theme';
 import '../styles/ui.css';
 import Main from './views/main';
 import * as WebFont from 'webfontloader';
 import Loading from './views/loading';
+import ReactJson from 'react-json-view';
+
 const App = ({}) => {
     const [currentView, setView] = React.useState('main');
-    const [progress, setProgress] = React.useState(0);
+    const [results, setResults] = React.useState({});
     const onEval = () => {
         console.log('Evaluating');
         setView('loading');
         parent.postMessage({pluginMessage: {type: 'evaluate'}}, '*');
     };
-    const Container = styled('main', {
-        overflowY: 'hidden',
+    const JSONContainer = css({
+        padding: 16,
+        height: 800,
+        overflowY: 'scroll',
     });
+    const Container = styled('main', {});
     React.useEffect(() => {
         GlobalStyles();
         try {
@@ -29,16 +34,17 @@ const App = ({}) => {
         // This is how we read messages sent from the plugin controller
         window.onmessage = (event) => {
             const {type, message} = event.data.pluginMessage;
-            if (type === 'Loading') {
-                console.log(message.progress);
-                if (message.done) {
-                    setView('main');
-                    setProgress(100);
-                } else {
-                    setView('loading');
-                }
-            } else if (type === 'Progress') {
-                setProgress(message.progress);
+            console.log(type);
+            if (type == 'Cancel') {
+                setView('main');
+            }
+            if (type == 'Progress') {
+                console.log(message.results);
+            }
+            if (type == 'Results') {
+                setResults(message.results);
+                console.log('results now');
+                setView('results');
             }
         };
     }, []);
@@ -46,7 +52,20 @@ const App = ({}) => {
     return (
         <Container>
             {currentView == 'main' && <Main onEval={onEval} />}
-            {currentView == 'loading' && <Loading progress={progress} />}
+            {currentView == 'loading' && <Loading setView={setView} setResults={setResults} />}
+            {currentView == 'results' && (
+                <div className={`${JSONContainer}`}>
+                    <ReactJson
+                        theme={'summerfruit:inverted'}
+                        collapsed={2}
+                        displayDataTypes={false}
+                        iconStyle={'triangle'}
+                        indentWidth={3}
+                        enableClipboard={true}
+                        src={results}
+                    />
+                </div>
+            )}
         </Container>
     );
 };

@@ -10,7 +10,7 @@ export const {styled, css, keyframes, getCssText, theme, createTheme, config} = 
             subtle: '#F0F0F0',
             accessible: '#666666',
             blue: '#18A0FB',
-            error: '#E05534',
+            error: '#F24822',
         },
         fontSizes: {
             bodyText: 11,

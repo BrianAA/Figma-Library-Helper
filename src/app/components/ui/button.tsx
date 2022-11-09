@@ -15,8 +15,12 @@ export const Button = styled('button', {
     lineHeight: theme.lineHeights.basic,
     textAlign: 'center',
     transition: 'opacity .25s',
+    cursor: 'pointer',
     '&:hover': {
         opacity: 0.6,
-        padding: '0px 10px',
+    },
+    '&:disabled': {
+        opacity: 0.5,
+        cursor: 'not-allowed',
     },
 });

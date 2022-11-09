@@ -1,1 +1,7 @@
+.halfOnHover{
+    opacity: 1;
+}
 
+.halfOnHover:hover{
+    opacity: .6;
+}

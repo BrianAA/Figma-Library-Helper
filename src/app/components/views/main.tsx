@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {styled, theme} from '../../../../stiches.theme';
+import {styled} from '../../../../stiches.theme';
 //@ts-ignore
 import Splash from '../../assets/main_splash_image.png';
 import {Button} from '../ui/button';
@@ -23,7 +23,9 @@ export default function Main({onEval}) {
                     updates to your components.
                 </BodyText>
                 <FlexBox>
-                    <Button onClick={onEval}>Generate Report</Button>
+                    <Button className="halfOnHover" onClick={onEval}>
+                        Generate Report
+                    </Button>
                 </FlexBox>
             </Container>
         </section>
