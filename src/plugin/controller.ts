@@ -38,20 +38,24 @@ figma.ui.onmessage = async (msg) => {
                 progress = (i / nodes.length) * 100;
                 let _Component;
                 try {
-                    if (nodes.type == 'COMPONENT_SET') {
+                    if (node.type == 'COMPONENT_SET') {
                         JSONData[node.name] = {
                             name: node.name,
+                            type: 'component_set',
                             description: node.description,
                             link: node.documentationLinks,
                             definitions: node.componentPropertyDefinitions,
                             references: node.componentPropertyReferences,
+                            id: node.id,
                         };
                     } else {
                         if (node.parent.type != 'COMPONENT_SET') {
                             JSONData[node.name] = {
                                 name: node.name,
+                                type: 'component',
                                 description: node.description,
                                 link: node.documentationLinks,
+                                id: node.id,
                             };
                         } else {
                             let value = JSONData[node.parent.name]['variants'];
@@ -59,14 +63,18 @@ figma.ui.onmessage = async (msg) => {
                                 JSONData[node.parent.name]['variants'] = [];
                                 JSONData[node.parent.name]['variants'].push({
                                     name: node.name,
+                                    type: 'component_variant',
                                     description: node.description,
                                     link: node.documentationLinks,
+                                    id: node.id,
                                 });
                             } else {
                                 JSONData[node.parent.name]['variants'].push({
                                     name: node.name,
+                                    type: 'component_variant',
                                     description: node.description,
                                     link: node.documentationLinks,
+                                    id: node.id,
                                 });
                             }
                         }
