@@ -19,8 +19,8 @@ export default function Main({onEval}) {
             <img src={Splash} width="100%" height="auto" />
             <Container>
                 <BodyText>
-                    Generate a JSON reBodyTextort of your components, variants and properties. Review and apply bulk
-                    updates to your components.
+                    Generate a JSON report of your components, variants and properties. Review and apply bulk updates to
+                    your components.
                 </BodyText>
                 <FlexBox>
                     <Button className="halfOnHover" onClick={onEval}>
