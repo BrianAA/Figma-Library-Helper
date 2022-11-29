@@ -135,9 +135,12 @@ async function GetComponents() {
     const doc = figma.currentPage.parent as DocumentNode;
     const AllComponents = [];
     doc.children.forEach((page) => {
-        const Components = page.findAll((n) => n.type == 'COMPONENT_SET' || n.type == 'COMPONENT');
-        Components.forEach((component) => {
-            AllComponents.push(component);
+        const Components = page.findAll((n) => n.type == ('COMPONENT_SET' || n.type == 'COMPONENT'));
+        Components.forEach(async (component: any) => {
+            const status = await component.getPublishStatusAsync();
+            if (status != 'UNPUBLISHED') {
+                AllComponents.push(component);
+            }
         });
     });
     return AllComponents;

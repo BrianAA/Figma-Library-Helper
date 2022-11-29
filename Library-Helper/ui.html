@@ -1,0 +1,26 @@
+<h2>Library Helper</h2>
+<div id="interface">
+  <button id="evaluate">Evaluate</button>
+  <p>For large libraries evaulating takes time. Please note when this action is clicked you cannot not cancel until done</p>
+</div>
+<div style="display:none;" id="loading">
+  <p>Evaluting Library</p>
+  <img  src="https://cdn.dribbble.com/users/47268/screenshots/4623785/loading_dots.gif" height="auto" width="50px"/>
+</div>
+<script>
+
+document.getElementById('evaluate').onclick = () => {
+  document.getElementById('interface').style.display="none";
+      document.getElementById("loading").style.display="block";
+  parent.postMessage({ pluginMessage: { type: 'evaluate'} }, '*')
+}
+
+window.onmessage=(event)=>{
+  if(event.data.pluginMessage.type=="Loading"){
+    if(event.data.pluginMessage.done){
+      document.getElementById('interface').style.display="block";
+      document.getElementById("loading").style.display="none";
+  }}
+}
+
+</script>
