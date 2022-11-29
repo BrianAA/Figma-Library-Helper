@@ -35,16 +35,11 @@ const App = ({}) => {
         window.onmessage = (event) => {
             const {type, message} = event.data.pluginMessage;
             console.log(type);
-            if (type == 'Cancel') {
+            if (type == 'Home') {
                 setView('main');
             }
             if (type == 'Progress') {
                 console.log(message.results);
-            }
-            if (type == 'Results') {
-                setResults(message.results);
-                console.log('results now');
-                setView('results');
             }
         };
     }, []);

@@ -11,6 +11,10 @@ const ProgressStatus = ({setView, setResults}) => {
     React.useEffect(() => {
         window.onmessage = (event) => {
             const {type, message} = event.data.pluginMessage;
+            if (type == 'Home') {
+                console.log('set view to home');
+                setView('main');
+            }
             if (type === 'Progress') {
                 setProgress(message.progress);
                 if (message.progress == 100) {
