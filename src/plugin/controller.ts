@@ -103,6 +103,7 @@ figma.ui.onmessage = async (msg) => {
             let status = Loop.next();
             const Process = setInterval(CheckProcess, 20);
             function CheckProcess() {
+                const start = Date.now();
                 if (!status.done) {
                     figma.ui.postMessage({
                         type: 'Progress',
@@ -126,6 +127,9 @@ figma.ui.onmessage = async (msg) => {
                     CancelOp = false;
                     progress = 0;
                     clearInterval(Process);
+
+                    const end = Date.now();
+                    console.log(`Evaluation time: ${end - start} ms`);
                 }
             }
         } else {
@@ -150,7 +154,9 @@ async function GetComponents() {
     const AllComponents = [];
     for (let p = 0; p < doc.children.length; p++) {
         const page = doc.children[p];
-        const Components = page.findAll((n) => n.type == ('COMPONENT_SET' || n.type == 'COMPONENT'));
+        const Components = page.findAllWithCriteria({
+            types: ['COMPONENT', 'COMPONENT_SET'],
+        });
         for (let i = 0; i < Components.length; i++) {
             const component = Components[i] as any;
             const status = await component.getPublishStatusAsync();
